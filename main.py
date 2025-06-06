@@ -2,7 +2,7 @@ import os
 from PyPDF2 import PdfReader, PdfWriter
 
 path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
-path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters"
+path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
 
 # Find the most recent PDF in the Cover Letters directory
 def find_most_recent_pdf(directory):
@@ -43,7 +43,9 @@ try:
     else:
         output_file_name = original_pdf_name + " - with LOR.pdf"
     
-    output_path = os.path.join(path_CoverLetters, output_file_name)
+    # Save the output file in one folder above the Cover Letters path
+    parent_folder = os.path.dirname(path_CoverLetters)
+    output_path = os.path.join(parent_folder, output_file_name)
     merge_pdfs(most_recent_pdf, path_LOR, output_path)
     print(f"Merged PDF saved to: {output_path}")
 except Exception as e:
