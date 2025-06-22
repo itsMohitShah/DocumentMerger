@@ -48,7 +48,7 @@ def prepare_chart_data(creation_dates):
             chart_data['labels'].append(date)
             chart_data['values'].append(value)
 
-        logging.info(Fore.GREEN + "Chart data prepared successfully." + Style.RESET_ALL)
+        logging.info("Chart data prepared successfully.")
         return chart_data
     except Exception as e:
         logging.error(Fore.RED + f"Error preparing chart data: {e}" + Style.RESET_ALL)
@@ -96,6 +96,6 @@ def main_chart(path_CoverLetters):
         creation_dates = read_pdfs_and_prepare_chart(path_CoverLetters)
         chart_data = prepare_chart_data(creation_dates)
         generate_chart(chart_data)
-        logging.info(Fore.GREEN + "Chart creation process completed successfully." + Style.RESET_ALL)
+        logging.info("Chart creation process completed successfully.")
     except Exception as e:
         logging.error(Fore.RED + f"An error occurred while preparing chart data: {e}" + Style.RESET_ALL)
