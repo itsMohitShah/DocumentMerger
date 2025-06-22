@@ -31,7 +31,7 @@ file_handler.addFilter(RemoveANSICodesFilter())  # Add the filter to remove ANSI
 # Console handler (ANSI codes retained for colored output)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-
+console_handler.addFilter(RemoveANSICodesFilter())  # Add the filter to remove ANSI codes
 # Custom formatter for console logs with colors
 class ColoredFormatter(logging.Formatter):
     def format(self, record):
@@ -53,4 +53,5 @@ console_handler.setFormatter(console_formatter)
 # Add handlers to the logger
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
+
 

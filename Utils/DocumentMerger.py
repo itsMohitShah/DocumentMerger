@@ -1,7 +1,6 @@
 print( "Loading DocumentMerger module ...")
 from PyPDF2 import PdfReader, PdfWriter
 import os
-import logging
 from colorama import Fore, Style
 from Utils.MiscUtils import find_most_recent_pdf
 from Utils.Logging import logger  # Import the logger from your Logging module
@@ -24,7 +23,7 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
         # Write the merged PDF to the output file
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
-        logger.info(f"PDFs merged successfully and saved to: {output_path}")
+        logger.info(Fore.GREEN + f"PDFs merged successfully and saved to: {output_path}" + Style.RESET_ALL)
     except Exception as e:
         logger.error(Fore.RED + f"Error merging PDFs: {e}" + Style.RESET_ALL)
         raise

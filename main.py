@@ -34,7 +34,7 @@ async def main():
     path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
     path_LinkedInMessage = r"LinkedInMessage.txt"
-
+    logger.info("Running in asynchronous mode")
     # Run all tasks concurrently
     results = await asyncio.gather(
         run_main_merger(path_CoverLetters, path_LOR),
@@ -49,6 +49,7 @@ def sync_main():
     path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
     path_LinkedInMessage = r"LinkedInMessage.txt"
+    logger.info("Running in synchronous mode")
     
     main_merger(path_CoverLetters, path_LOR)
     name = main_linkedin_search(path_CoverLetters)
