@@ -3,13 +3,22 @@ import webbrowser
 from PyPDF2 import PdfReader
 import os
 import spacy
+import logging
+from colorama import Fore, Style
 from Utils.MiscUtils import find_most_recent_pdf
-def extract_companyname(pdf_path):
-    name_pdf = os.path.basename(pdf_path)
-    company_name = name_pdf.split("-")[-1]
-    company_name = company_name.replace(".pdf", "").strip()
-    return company_name
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+def extract_companyname(pdf_path):
+    try:
+        name_pdf = os.path.basename(pdf_path)
+        company_name = name_pdf.split("-")[-1]
+        company_name = company_name.replace(".pdf", "").strip()
+        logging.info(Fore.GREEN + f"Extracted company name: {company_name}" + Style.RESET_ALL)
+        return company_name
+    except Exception as e:
+        logging.error(Fore.RED + f"Error extracting company name: {e}" + Style.RESET_ALL)
+        return None
 
 def extract_name_from_pdf(pdf_path):
     """
@@ -36,13 +45,14 @@ def extract_name_from_pdf(pdf_path):
         for ent in doc.ents:
             if ent.label_ == "PERSON":
                 ent_text = ent.text.strip()
-                if ent_text.lower() == "mohit shah" or ent_text.lower() == "jan erxleben" or ent_text.lower() == "nirav doshi":
+                if ent_text.lower() in ["mohit shah", "jan erxleben", "nirav doshi"]:
                     continue
                 name.append(ent.text)
         name = list(set(name))  # Remove duplicates
+        logging.info(Fore.GREEN + f"Extracted names: {name}" + Style.RESET_ALL)
         return name if name else None                
     except Exception as e:
-        print(f"Error reading PDF: {e}")
+        logging.error(Fore.RED + f"Error extracting name from PDF: {e}" + Style.RESET_ALL)
         return None
 
 def search_linkedin(list_names, companyname):
@@ -56,12 +66,12 @@ def search_linkedin(list_names, companyname):
         None
     """
     if not list_names:
-        print("No name provided for LinkedIn search.")
+        logging.warning(Fore.YELLOW + "No names provided for LinkedIn search." + Style.RESET_ALL)
         return
 
     # Construct the LinkedIn search URL
     base_url = "https://www.linkedin.com/search/results/people/?keywords="
-    for name in (list_names):
+    for name in list_names:
         name = name.strip()  # Clean up the name
         if not name:
             continue
@@ -71,8 +81,7 @@ def search_linkedin(list_names, companyname):
 
         # Open the search URL in the default web browser
         webbrowser.open(search_url, new = 1)
-        print(f"Searching LinkedIn for: {name}")
-
+        logging.info(Fore.GREEN + f"Searching LinkedIn for: {search_query}" + Style.RESET_ALL)
 
 def main_linkedin_search(pdf_path):
     """
@@ -84,10 +93,13 @@ def main_linkedin_search(pdf_path):
     Returns:
         None
     """
-    most_recent_pdf = find_most_recent_pdf(pdf_path)
-    companyname = extract_companyname(most_recent_pdf)
-    name = extract_name_from_pdf(most_recent_pdf)
-    if name:
-        search_linkedin(name, companyname)
-    else:
-        print("No valid name found in the PDF for LinkedIn search.")
+    try:
+        most_recent_pdf = find_most_recent_pdf(pdf_path)
+        companyname = extract_companyname(most_recent_pdf)
+        name = extract_name_from_pdf(most_recent_pdf)
+        if name:
+            search_linkedin(name, companyname)
+        else:
+            logging.warning(Fore.YELLOW + "No valid name found in the PDF for LinkedIn search." + Style.RESET_ALL)
+    except Exception as e:
+        logging.error(Fore.RED + f"Error in LinkedIn search process: {e}" + Style.RESET_ALL)
