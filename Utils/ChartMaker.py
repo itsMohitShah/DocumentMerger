@@ -1,6 +1,8 @@
 import os
 import datetime
 import matplotlib.pyplot as plt
+import matplotlib
+
 import numpy as np
 import logging
 from colorama import Fore, Style
@@ -87,7 +89,6 @@ def generate_chart(chart_data):
         logging.info(Fore.GREEN + "Chart generated and displayed successfully." + Style.RESET_ALL)
     except Exception as e:
         logging.error(Fore.RED + f"Error generating chart: {e}" + Style.RESET_ALL)
-        raise
 
 # Main function to handle the chart creation process
 def main_chart(path_CoverLetters):
