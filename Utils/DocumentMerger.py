@@ -1,6 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter
 import os
-from MiscUtils import find_most_recent_pdf
+from Utils.MiscUtils import find_most_recent_pdf
 
 # Merge PDFs
 def merge_pdfs(pdf1_path, pdf2_path, output_path):
