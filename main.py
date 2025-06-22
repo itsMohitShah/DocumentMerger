@@ -62,9 +62,10 @@ if __name__ == "__main__":
     start_time = datetime.datetime.now()
     print(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(main())
 
+#    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+#   asyncio.run(main())
+    sync_main()
 
     end_time = datetime.datetime.now()
     duration = end_time - start_time

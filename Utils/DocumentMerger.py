@@ -24,7 +24,6 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
         # Write the merged PDF to the output file
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
-
         logger.info(f"PDFs merged successfully and saved to: {output_path}")
     except Exception as e:
         logger.error(Fore.RED + f"Error merging PDFs: {e}" + Style.RESET_ALL)
