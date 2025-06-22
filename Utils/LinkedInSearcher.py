@@ -1,3 +1,4 @@
+print("Loading LinkedInSearcher module ...")
 import time
 import re
 import webbrowser
@@ -81,12 +82,12 @@ def extract_name_from_pdf(pdf_path):
         # Extract text from all pages
         for page in reader.pages:
             text += page.extract_text()
-        logging.info("PDF text extracted successfully.")
+        logging.info("Extracted PDF text")
 
         # Use spaCy to extract names
         logging.info("Loading spaCy model for name extraction...")
         nlp = spacy.load("en_core_web_trf")
-        logging.info(Fore.GREEN + f"spaCy model loaded successfully." + Style.RESET_ALL)
+        logging.info(Fore.GREEN + f"spaCy model loaded" + Style.RESET_ALL)
         doc = nlp(text)
         list_names = []
         for ent in doc.ents:
@@ -100,6 +101,8 @@ def extract_name_from_pdf(pdf_path):
 
         # Filter full names
         list_names = filter_full_names(list_names)
+        # swape the first and last names if they are in the format "Last, First"
+        list_names = [re.sub(r'(\w+) (\w+)', r'\2 \1', name) for name in list_names]
         logging.info(Fore.GREEN + f"Final extracted names: {list_names}" + Style.RESET_ALL)
         return list_names if list_names else None
     except Exception as e:
@@ -135,7 +138,7 @@ def search_linkedin(list_names, companyname):
             search_url = base_url + search_query.replace(" ", "%20")  # Replace spaces with URL-encoded '%20'
 
             # Open the search URL in the default web browser
-            logging.info(f"Searching LinkedIn for: {search_query}")
+            logging.info(Fore.GREEN + f"Searching LinkedIn for: {search_query}" + Style.RESET_ALL)
             webbrowser.open(search_url, new=1)
             if len(list_names) > 1:
                 wait_time = 5  # Wait time in seconds

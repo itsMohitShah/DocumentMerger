@@ -1,3 +1,4 @@
+print( "Loading DocumentMerger module ...")
 from PyPDF2 import PdfReader, PdfWriter
 import os
 import logging

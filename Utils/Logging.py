@@ -1,3 +1,4 @@
+print("Starting the logging configuration...")
 import logging
 import re
 from colorama import Fore, Style
@@ -19,6 +20,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 logging.getLogger("matplotlib").setLevel(logging.CRITICAL)
+
 # File handler (ANSI codes removed)
 file_handler = logging.FileHandler("application.log")
 file_handler.setLevel(logging.INFO)
@@ -33,8 +35,12 @@ console_handler.setLevel(logging.INFO)
 # Custom formatter for console logs with colors
 class ColoredFormatter(logging.Formatter):
     def format(self, record):
+        # Default color for all INFO logs is white
         if record.levelno == logging.INFO:
-            record.msg = Fore.GREEN + record.msg + Style.RESET_ALL
+            if "success" in record.msg.lower():  # Highlight success messages in green
+                record.msg = Fore.GREEN + record.msg + Style.RESET_ALL
+            else:
+                record.msg = record.msg
         elif record.levelno == logging.WARNING:
             record.msg = Fore.YELLOW + record.msg + Style.RESET_ALL
         elif record.levelno == logging.ERROR:
@@ -48,7 +54,3 @@ console_handler.setFormatter(console_formatter)
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
-# Example log messages
-logger.info("This is a success message.")
-logger.warning("This is a warning message.")
-logger.error("This is an error message.")

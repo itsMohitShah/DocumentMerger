@@ -1,21 +1,15 @@
+print("Starting the main script...")
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-from PyPDF2 import PdfReader, PdfWriter
-import spacy
 import datetime
-import re
-import webbrowser
 import asyncio
-import logging
 from colorama import Fore, Style
-from Utils import Logging 
-from Utils.MiscUtils import find_most_recent_pdf
-from Utils.DocumentMerger import merge_pdfs, main_merger
-from Utils.ChartMaker import read_pdfs_and_prepare_chart, prepare_chart_data, generate_chart, main_chart
-from Utils.LinkedInSearcher import extract_name_from_pdf, search_linkedin, main_linkedin_search
+import logging
+from Utils import Logging
+from Utils.DocumentMerger import main_merger
+from Utils.ChartMaker import main_chart
+from Utils.LinkedInSearcher import main_linkedin_search
 from Utils.LinkedInMessager import main_copymessage
-
-
 
 async def run_main_merger(path_CoverLetters, path_LOR):
     """

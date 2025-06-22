@@ -1,3 +1,4 @@
+print("Loading LinkedInMessager module ...")
 import os
 import pyperclip
 import logging
@@ -17,7 +18,7 @@ def main_copymessage(path_LinkedInMessage, list_names):
         # Read the message template
         with open(path_LinkedInMessage, 'r', encoding='utf-8') as file:
             message_template = file.read()
-        logger.info("Successfully read the LinkedIn message template.")
+        logger.info("Read the LinkedIn message template.")
         name = list_names[0]
         # Replace the placeholder with the provided name
         message = message_template.replace("{name}", name)

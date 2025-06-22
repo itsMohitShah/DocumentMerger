@@ -1,3 +1,4 @@
+print("Loading ChartMaker...")
 import os
 import datetime
 import matplotlib.pyplot as plt
@@ -26,7 +27,7 @@ def read_pdfs_and_prepare_chart(directory):
         
         # Sort by creation date
         creation_dates.sort(key=lambda x: datetime.datetime.strptime(x[1], '%d-%m-%Y'))
-        logging.info(Fore.GREEN + f"Successfully read and prepared creation dates for {len(pdf_files)} PDFs." + Style.RESET_ALL)
+        logging.info(Fore.GREEN + f"Read and prepared creation dates for {len(pdf_files)} PDFs." + Style.RESET_ALL)
         return creation_dates
     except Exception as e:
         logging.error(Fore.RED + f"Error reading PDFs and preparing chart data: {e}" + Style.RESET_ALL)
@@ -48,7 +49,7 @@ def prepare_chart_data(creation_dates):
             chart_data['labels'].append(date)
             chart_data['values'].append(value)
 
-        logging.info("Chart data prepared successfully.")
+        logging.info("Chart data prepared.")
         return chart_data
     except Exception as e:
         logging.error(Fore.RED + f"Error preparing chart data: {e}" + Style.RESET_ALL)
@@ -86,7 +87,7 @@ def generate_chart(chart_data):
 
         plt.tight_layout()
         plt.show()
-        logging.info(Fore.GREEN + "Chart generated and displayed successfully." + Style.RESET_ALL)
+        logging.info(Fore.GREEN + "Chart generated and displayed." + Style.RESET_ALL)
     except Exception as e:
         logging.error(Fore.RED + f"Error generating chart: {e}" + Style.RESET_ALL)
 
@@ -96,6 +97,6 @@ def main_chart(path_CoverLetters):
         creation_dates = read_pdfs_and_prepare_chart(path_CoverLetters)
         chart_data = prepare_chart_data(creation_dates)
         generate_chart(chart_data)
-        logging.info("Chart creation process completed successfully.")
+        logging.info("Chart creation process completed.")
     except Exception as e:
         logging.error(Fore.RED + f"An error occurred while preparing chart data: {e}" + Style.RESET_ALL)
