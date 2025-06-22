@@ -17,7 +17,6 @@ if __name__ == "__main__":
     path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
 
-    # main_merger(path_CoverLetters, path_LOR)
-    # main_chart(path_CoverLetters)
-    
+    main_merger(path_CoverLetters, path_LOR)
+    main_chart(path_CoverLetters)
     main_linkedin_search(path_CoverLetters)
