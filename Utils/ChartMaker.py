@@ -6,9 +6,9 @@ import matplotlib
 
 import numpy as np
 import logging
+from Utils.Logging import logger  # Import the logger from your Logging module
 from colorama import Fore, Style
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Function to read all PDFs and prepare a bar chart based on their creation dates
 def read_pdfs_and_prepare_chart(directory):
@@ -27,10 +27,10 @@ def read_pdfs_and_prepare_chart(directory):
         
         # Sort by creation date
         creation_dates.sort(key=lambda x: datetime.datetime.strptime(x[1], '%d-%m-%Y'))
-        logging.info(Fore.GREEN + f"Read and prepared creation dates for {len(pdf_files)} PDFs." + Style.RESET_ALL)
+        logger.info(Fore.GREEN + f"Read and prepared creation dates for {len(pdf_files)} PDFs." + Style.RESET_ALL)
         return creation_dates
     except Exception as e:
-        logging.error(Fore.RED + f"Error reading PDFs and preparing chart data: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"Error reading PDFs and preparing chart data: {e}" + Style.RESET_ALL)
         raise
 
 # Function to prepare chart data
@@ -49,10 +49,10 @@ def prepare_chart_data(creation_dates):
             chart_data['labels'].append(date)
             chart_data['values'].append(value)
 
-        logging.info("Chart data prepared.")
+        logger.info("Chart data prepared.")
         return chart_data
     except Exception as e:
-        logging.error(Fore.RED + f"Error preparing chart data: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"Error preparing chart data: {e}" + Style.RESET_ALL)
         raise
 
 # Function to generate the chart
@@ -87,9 +87,9 @@ def generate_chart(chart_data):
 
         plt.tight_layout()
         plt.show()
-        logging.info(Fore.GREEN + "Chart generated and displayed." + Style.RESET_ALL)
+        logger.info(Fore.GREEN + "Chart generated and displayed." + Style.RESET_ALL)
     except Exception as e:
-        logging.error(Fore.RED + f"Error generating chart: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"Error generating chart: {e}" + Style.RESET_ALL)
 
 # Main function to handle the chart creation process
 def main_chart(path_CoverLetters):
@@ -97,6 +97,6 @@ def main_chart(path_CoverLetters):
         creation_dates = read_pdfs_and_prepare_chart(path_CoverLetters)
         chart_data = prepare_chart_data(creation_dates)
         generate_chart(chart_data)
-        logging.info("Chart creation process completed.")
+        logger.info("Chart creation process completed.")
     except Exception as e:
-        logging.error(Fore.RED + f"An error occurred while preparing chart data: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"An error occurred while preparing chart data: {e}" + Style.RESET_ALL)

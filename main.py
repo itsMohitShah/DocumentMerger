@@ -5,7 +5,7 @@ import datetime
 import asyncio
 from colorama import Fore, Style
 import logging
-from Utils import Logging
+from Utils.Logging import logger  # Import the logger from your Logging module
 from Utils.DocumentMerger import main_merger
 from Utils.ChartMaker import main_chart
 from Utils.LinkedInSearcher import main_linkedin_search
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     print(f"Current working directory: {os.getcwd()}")
     start_time = datetime.datetime.now()
     print(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    logging.info(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(main())
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     duration = end_time - start_time
     print("Execution completed.")
     print(f"Total execution time: {duration.seconds} seconds")
-    logging.info(f"Total execution time: {duration.seconds} seconds")
+    logger.info(f"Total execution time: {duration.seconds} seconds")
 
 
 

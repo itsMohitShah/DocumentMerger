@@ -4,8 +4,7 @@ import os
 import logging
 from colorama import Fore, Style
 from Utils.MiscUtils import find_most_recent_pdf
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+from Utils.Logging import logger  # Import the logger from your Logging module
 
 # Merge PDFs
 def merge_pdfs(pdf1_path, pdf2_path, output_path):
@@ -26,9 +25,9 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
 
-        logging.info(Fore.GREEN + f"PDFs merged successfully and saved to: {output_path}" + Style.RESET_ALL)
+        logger.info(f"PDFs merged successfully and saved to: {output_path}")
     except Exception as e:
-        logging.error(Fore.RED + f"Error merging PDFs: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"Error merging PDFs: {e}" + Style.RESET_ALL)
         raise
 
 
@@ -48,4 +47,4 @@ def main_merger(path_CoverLetters, path_LOR):
         output_path = os.path.join(parent_folder, output_file_name)
         merge_pdfs(most_recent_pdf, path_LOR, output_path)
     except Exception as e:
-        logging.error(Fore.RED + f"Error in main merger process: {e}" + Style.RESET_ALL)
+        logger.error(Fore.RED + f"Error in main merger process: {e}" + Style.RESET_ALL)
