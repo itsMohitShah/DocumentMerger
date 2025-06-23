@@ -83,9 +83,12 @@ def extract_name_from_pdf(pdf_path):
             text += page.extract_text()
         logger.info("Extracted PDF text")
         import spacy
+
         # Use spaCy to extract names
         logger.info("Loading spaCy model for name extraction...")
+
         nlp = spacy.load("en_core_web_trf")
+
         logger.info(Fore.GREEN + f"spaCy model loaded" + Style.RESET_ALL)
         doc = nlp(text)
         list_names = []
@@ -125,7 +128,6 @@ def search_linkedin(list_names, companyname):
         if not list_names:
             logger.warning(Fore.YELLOW + "No names provided for LinkedIn search." + Style.RESET_ALL)
             return
-
         logger.info(f"Starting LinkedIn search for names: {list_names} and company: {companyname}")
         # Construct the LinkedIn search URL
         base_url = "https://www.linkedin.com/search/results/people/?keywords="

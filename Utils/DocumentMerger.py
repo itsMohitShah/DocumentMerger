@@ -1,9 +1,10 @@
 print( "Loading DocumentMerger module ...")
 from PyPDF2 import PdfReader, PdfWriter
 import os
-from colorama import Fore, Style
+import logging
 from Utils.MiscUtils import find_most_recent_pdf
 from Utils.Logging import logger  # Import the logger from your Logging module
+from colorama import Fore, Style
 
 # Merge PDFs
 def merge_pdfs(pdf1_path, pdf2_path, output_path):
@@ -23,14 +24,15 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
         # Write the merged PDF to the output file
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
-        logger.info(Fore.GREEN + f"PDFs merged successfully and saved to: {output_path}" + Style.RESET_ALL)
+        logger.info(f"PDFs merged successfully and saved to: {output_path}")
     except Exception as e:
-        logger.error(Fore.RED + f"Error merging PDFs: {e}" + Style.RESET_ALL)
+        logger.error(f"Error merging PDFs: {e}")
         raise
 
 
 def main_merger(path_CoverLetters, path_LOR):
     try:
+
         most_recent_pdf = find_most_recent_pdf(path_CoverLetters)
         original_pdf_name = os.path.splitext(os.path.basename(most_recent_pdf))[0]
 
@@ -45,4 +47,4 @@ def main_merger(path_CoverLetters, path_LOR):
         output_path = os.path.join(parent_folder, output_file_name)
         merge_pdfs(most_recent_pdf, path_LOR, output_path)
     except Exception as e:
-        logger.error(Fore.RED + f"Error in main merger process: {e}" + Style.RESET_ALL)
+        logger.error(f"Error in main merger process: {e}")

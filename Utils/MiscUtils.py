@@ -1,7 +1,6 @@
 import os
 import datetime
 from Utils.Logging import logger  # Import the logger from your Logging module
-from colorama import Fore, Style
 
 
 # Find the most recent PDF in the Cover Letters directory
@@ -16,6 +15,6 @@ def find_most_recent_pdf(directory):
         logger.info(f"Most recent PDF found: {most_recent_pdf}")
         return most_recent_pdf
     except Exception as e:
-        logger.error(Fore.RED + f"Error finding the most recent PDF: {e}" + Style.RESET_ALL)
+        logger.error(f"Error finding the most recent PDF: {e}")
         raise
 
