@@ -41,9 +41,13 @@ def prepare_chart_data(creation_dates):
             'values': []
         }
         count = {}
+        seven_days_back = datetime.date.today() - datetime.timedelta(days=7)
+        list_last_seven_days = [seven_days_back + datetime.timedelta(days=i) for i in range(8)]
+        for date in list_last_seven_days:
+            count[date.strftime('%d-%m-%Y')] = 0
         for _, creation_date in creation_dates:
             if creation_date not in count:
-                count[creation_date] = 0
+                continue
             count[creation_date] += 1
         for date, value in count.items():
             chart_data['labels'].append(date)
@@ -63,14 +67,12 @@ def generate_chart(chart_data):
         plt.xlabel('Creation Date')
         plt.ylabel('Number of PDFs')
 
-        # Calculate the difference between the last and second last values
-        difference = chart_data['values'][-1] - chart_data['values'][-2] if len(chart_data['values']) > 1 else 0
-        today = datetime.date.today().strftime('%d.%m.%Y')
-        if difference < 0:
-            plt.title(f"Number of Applications remaining today ({today}): {abs(difference)}")
-        else:
-            plt.title(f"Number of additional applications done today: {abs(difference)}")
-
+        # Calculate the average
+        average = sum(chart_data['values']) / len(chart_data['values']) if chart_data['values'] else 0
+        total = sum(chart_data['values'])
+        plt.axhline(y=average, color='b', linestyle='--', label=f'Average: {average:.2f}')
+        plt.title(f'Number of PDFs Created in the Last 7 Days\nTotal: {total}\nAverage: {average:.2f}')
+        plt.legend()
         # Add value labels to the bars
         for i, value in enumerate(chart_data['values']):
             plt.text(i, value + 0.1, str(value), ha='center', va='bottom')
