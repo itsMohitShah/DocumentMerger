@@ -143,7 +143,7 @@ def search_linkedin(list_names, companyname):
             logger.info(Fore.GREEN + f"Searching LinkedIn for: {search_query}" + Style.RESET_ALL)
             webbrowser.open(search_url, new=1)
             if len(list_names) > 1:
-                wait_time = 5  # Wait time in seconds
+                wait_time = 2  # Wait time in seconds
                 logger.info(Fore.BLUE + f"Waiting for {wait_time} seconds before opening the next search." + Style.RESET_ALL)
                 time.sleep(wait_time)  # Wait before opening the next search
         logger.info(Fore.GREEN + "LinkedIn search completed." + Style.RESET_ALL)
@@ -173,6 +173,8 @@ def main_linkedin_search(pdf_path):
             return list_names
         else:
             logger.warning(Fore.YELLOW + "No valid name found in the PDF for LinkedIn search." + Style.RESET_ALL)
+            logger.info("Attempting to search recruiters on LinkedIn.")
+            search_linkedin(["Recruiter", "Talent Acquisition"], companyname)
             return None
     except Exception as e:
         logger.error(Fore.RED + f"Error in LinkedIn search process: {e}" + Style.RESET_ALL)
