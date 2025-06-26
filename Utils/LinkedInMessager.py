@@ -4,7 +4,7 @@ import pyperclip
 import logging
 from Utils.Logging import logger  # Import the logger from your Logging module
 
-def main_copymessage(path_LinkedInMessage, list_names):
+def main_copymessage(path_LinkedInMessage, list_names, company_name):
     """
     Reads a LinkedIn message template from a file and replaces placeholders with the provided name.
     
@@ -21,9 +21,13 @@ def main_copymessage(path_LinkedInMessage, list_names):
         logger.info("Read the LinkedIn message template.")
         name = list_names[0]
         # Replace the placeholder with the provided name
-        message = message_template.replace("{name}", name)
+        message = message_template.replace("{NAME}", name)
         logger.info(f"Replaced placeholder with name: {name}")
         
+        # Replace the company name if provided
+        message = message.replace("{COMPANY}", company_name)
+        logger.info(f"Replaced placeholder with company name: {company_name}")
+
         # Copy the message to clipboard
         pyperclip.copy(message)
         logger.info("LinkedIn message copied to clipboard successfully.")
