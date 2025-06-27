@@ -34,7 +34,6 @@ async def main():
     path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
     path_LinkedInMessage = r"LinkedInMessage.txt"
-    logger.info("Running in asynchronous mode")
     # Run all tasks concurrently
     results = await asyncio.gather(
         run_main_merger(path_CoverLetters, path_LOR),
@@ -48,12 +47,10 @@ def sync_main():
     path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
     path_LinkedInMessage = r"LinkedInMessage.txt"
-    logger.info("Running in synchronous mode")
-    
     main_merger(path_CoverLetters, path_LOR)
-    name = main_linkedin_search(path_CoverLetters)
-    if name is not None:
-        main_copymessage(path_LinkedInMessage, name)
+    (name, company) = main_linkedin_search(path_CoverLetters)
+    
+    main_copymessage(path_LinkedInMessage, name, company)
     main_chart(path_CoverLetters)
 
 if __name__ == "__main__":
@@ -63,9 +60,14 @@ if __name__ == "__main__":
     print(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("Starting the main script successfully ...")
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(main())
-    # sync_main()
+    bool_async = True  # Set to False to run synchronously
+    if bool_async:
+        logger.info("Running in asynchronous mode")
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        asyncio.run(main())
+    else:
+        logger.info("Running in synchronous mode")
+        sync_main()
     logger.info("Ending the main script successfully ...")
 
     end_time = datetime.datetime.now()
