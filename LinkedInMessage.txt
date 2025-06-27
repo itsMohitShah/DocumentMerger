@@ -1,1 +1,1 @@
-Hallo {NAME},  ich heiße Mohit und ich arbeite in der R&D Dept bei ISRA Vision. Ab sofort suche ich eine neue Stelle im Bereich Data Science und Softwareentwicklung. Ich habe schon ein Bewerbung bei {COMPANY} gemacht. Bitte schauen Sie gern mein Profil an – ich freue mich auf Ihre Antwort!
+Hallo {NAME}, ich heiße Mohit und ich arbeite in der R&D Dept bei ISRA Vision. Ab sofort suche ich eine neue Stelle im Bereich Data Science und Softwareentwicklung. Ich habe schon ein Bewerbung bei {COMPANY} gemacht. Bitte schauen Sie gern mein Profil an – ich freue mich auf Ihre Antwort!

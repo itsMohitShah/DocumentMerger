@@ -170,12 +170,12 @@ def main_linkedin_search(pdf_path):
         list_names = extract_name_from_pdf(most_recent_pdf)
         if list_names:
             search_linkedin(list_names, companyname)
-            return list_names
+            return list_names, companyname
         else:
             logger.warning(Fore.YELLOW + "No valid name found in the PDF for LinkedIn search." + Style.RESET_ALL)
             logger.info("Attempting to search recruiters on LinkedIn.")
             search_linkedin(["Recruiter", "Talent Acquisition"], companyname)
-            return None
+            return None , companyname
     except Exception as e:
         logger.error(Fore.RED + f"Error in LinkedIn search process: {e}" + Style.RESET_ALL)
         return None

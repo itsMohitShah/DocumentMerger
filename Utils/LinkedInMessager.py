@@ -19,7 +19,11 @@ def main_copymessage(path_LinkedInMessage, list_names, company_name):
         with open(path_LinkedInMessage, 'r', encoding='utf-8') as file:
             message_template = file.read()
         logger.info("Read the LinkedIn message template.")
-        name = list_names[0]
+        if list_names == None:
+            logger.warning("No names provided, using blank placeholder '' instead.")
+            name = ""
+        else:
+            name = list_names[0]
         # Replace the placeholder with the provided name
         message = message_template.replace("{NAME}", name)
         logger.info(f"Replaced placeholder with name: {name}")

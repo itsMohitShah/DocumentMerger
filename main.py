@@ -40,9 +40,8 @@ async def main():
         run_main_merger(path_CoverLetters, path_LOR),
         run_main_linkedin_search(path_CoverLetters)
     )
-    _, name = results
-    if name is not None:
-        main_copymessage(path_LinkedInMessage, name)
+    _, (name, company) = results
+    main_copymessage(path_LinkedInMessage, name, company)
     main_chart(path_CoverLetters)
 
 def sync_main():
