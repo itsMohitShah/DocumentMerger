@@ -4,7 +4,7 @@ import re
 import webbrowser
 from PyPDF2 import PdfReader
 import os
-import logging
+import datetime
 from Utils.Logging import logger  # Import the logger from your Logging module
 from colorama import Fore, Style
 from Utils.MiscUtils import find_most_recent_pdf
@@ -82,14 +82,25 @@ def extract_name_from_pdf(pdf_path):
         for page in reader.pages:
             text += page.extract_text()
         logger.info("Extracted PDF text")
+        start_time_spacy = datetime.datetime.now()
+        logger.info(f"Starting name extraction using spaCy at {start_time_spacy.strftime('%Y-%m-%d %H:%M:%S')}")
         import spacy
-
+        end_time_spacy = datetime.datetime.now()
+        logger.info(f"spaCy import completed at {end_time_spacy.strftime('%Y-%m-%d %H:%M:%S')}")
+        duration_spacy = end_time_spacy - start_time_spacy
+        logger.info(f"Time taken to import spaCy: {duration_spacy.total_seconds()} seconds")
         # Use spaCy to extract names
         logger.info("Loading spaCy model for name extraction...")
-
+        start_model_load = datetime.datetime.now()
+        logger.info(f"Starting spaCy model load at {start_model_load.strftime('%Y-%m-%d %H:%M:%S')}")
         nlp = spacy.load("en_core_web_trf")
-
+        
+        end_model_load = datetime.datetime.now()
+        logger.info(f"spaCy model loaded at {end_model_load.strftime('%Y-%m-%d %H:%M:%S')}")
+        duration_model_load = end_model_load - start_model_load
+        logger.info(f"Time taken to load spaCy model: {duration_model_load.total_seconds()} seconds")
         logger.info(Fore.GREEN + f"spaCy model loaded" + Style.RESET_ALL)
+
         doc = nlp(text)
         list_names = []
         for ent in doc.ents:
