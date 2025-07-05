@@ -93,6 +93,114 @@ def generate_chart(chart_data):
     except Exception as e:
         logger.error(Fore.RED + f"Error generating chart: {e}" + Style.RESET_ALL)
 
+import tkinter as tk
+from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+import numpy as np
+from Utils.Logging import logger  # Import the logger from your Logging module
+
+def refresh_chart(canvas, figure, path_CoverLetters):
+    """
+    Refreshes the chart by regenerating the data and updating the graph.
+    """
+    try:
+        logger.info("Refreshing the chart...")
+        # Clear the figure
+        figure.clear()
+
+        # Generate new chart data
+        creation_dates = read_pdfs_and_prepare_chart(path_CoverLetters)
+        chart_data = prepare_chart_data(creation_dates)
+
+        # Plot the graph on the figure
+        ax = figure.add_subplot(111)
+        ax.bar(chart_data['labels'], chart_data['values'], color='blue')
+        ax.set_xlabel('Creation Date')
+        ax.set_ylabel('Number of PDFs')
+        for i, value in enumerate(chart_data['values']):
+            ax.text(i, value + 0.1, str(value), ha='center', va='bottom')
+        # Calculate the average
+        average = sum(chart_data['values']) / len(chart_data['values']) if chart_data['values'] else 0
+        total = sum(chart_data['values'])
+        ax.axhline(y=average, color='b', linestyle='--', label=f'Average: {average:.2f}')
+        ax.set_title(f'Number of PDFs Created in the Last 7 Days\nTotal: {total}\nAverage: {average:.2f}')
+        ax.legend()
+
+        # Rotate x-axis labels
+        ax.set_xticklabels(chart_data['labels'], rotation=45, ha='right')
+
+        # Add a trendline
+        z = np.polyfit(range(len(chart_data['values'])), chart_data['values'], 1)
+        p = np.poly1d(z)
+        ax.plot(range(len(chart_data['values'])), p(range(len(chart_data['values']))), color='red', linestyle='--', label='Trendline')
+        ax.legend()
+
+        # Redraw the canvas
+        canvas.draw()
+        logger.info("Chart refreshed successfully.")
+    except Exception as e:
+        logger.error(f"An error occurred while refreshing the chart: {e}")
+
+def chart_gui(path_CoverLetters):
+    """
+    Creates a Tkinter GUI to display the chart and includes a refresh button.
+    """
+    # Create the main Tkinter window
+    root = tk.Tk()
+    root.title("PDF Creation Tracker")
+
+    # Create a frame for the graph
+    frame = ttk.Frame(root)
+    frame.pack(fill=tk.BOTH, expand=True)
+
+    # Create a matplotlib figure
+    figure = plt.Figure(figsize=(10, 5), dpi=100)
+
+    # Generate the initial chart
+    creation_dates = read_pdfs_and_prepare_chart(path_CoverLetters)
+    chart_data = prepare_chart_data(creation_dates)
+    ax = figure.add_subplot(111)
+    ax.bar(chart_data['labels'], chart_data['values'], color='blue')
+    ax.set_xlabel('Creation Date')
+    ax.set_ylabel('Number of PDFs')
+
+    # Calculate the average
+    average = sum(chart_data['values']) / len(chart_data['values']) if chart_data['values'] else 0
+    total = sum(chart_data['values'])
+    ax.axhline(y=average, color='b', linestyle='--', label=f'Average: {average:.2f}')
+    ax.set_title(f'Number of PDFs Created in the Last 7 Days\nTotal: {total}\nAverage: {average:.2f}')
+    ax.legend()
+
+    # Rotate x-axis labels
+    ax.set_xticklabels(chart_data['labels'], rotation=45, ha='right')
+
+    # Add a trendline
+    z = np.polyfit(range(len(chart_data['values'])), chart_data['values'], 1)
+    p = np.poly1d(z)
+    ax.plot(range(len(chart_data['values'])), p(range(len(chart_data['values']))), color='red', linestyle='--', label='Trendline')
+    ax.legend()
+
+    # Embed the graph in the Tkinter window
+    canvas = FigureCanvasTkAgg(figure, master=frame)
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+    # Create a refresh button
+    refresh_button = ttk.Button(root, text="Refresh", command=lambda: refresh_chart(canvas, figure, path_CoverLetters))
+    refresh_button.pack(pady=10)
+
+    # Start the Tkinter main loop
+    root.mainloop()
+
+if __name__ == "__main__":
+    path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
+    logger.info("Starting the chart GUI...")
+    try:
+        chart_gui(path_CoverLetters)
+        logger.info("Chart GUI closed successfully.")
+    except Exception as e:
+        logger.error(f"An error occurred in the chart GUI: {e}")
+
 # Main function to handle the chart creation process
 def main_chart(path_CoverLetters):
     try:
