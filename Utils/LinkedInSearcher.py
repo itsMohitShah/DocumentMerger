@@ -116,7 +116,7 @@ def extract_name_from_pdf(pdf_path):
         # Filter full names
         list_names = filter_full_names(list_names)
         # swape the first and last names if they are in the format "Last, First"
-        list_names = [re.sub(r'(\w+) (\w+)', r'\2 \1', name) for name in list_names]
+        #  list_names = [re.sub(r'(\w+) (\w+)', r'\2 \1', name) for name in list_names]
         logger.info(Fore.GREEN + f"Final extracted names: {list_names}" + Style.RESET_ALL)
         return list_names if list_names else None
     except Exception as e:
