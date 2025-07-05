@@ -95,7 +95,7 @@ def extract_name_from_pdf(pdf_path):
         for ent in doc.ents:
             if ent.label_ == "PERSON":
                 ent_text = ent.text.strip()
-                if ent_text.lower() in ["mohit shah", "jan erxleben", "nirav doshi"]:
+                if ent_text.lower() in ["mohit shah", "jan erxleben", "nirav doshi", "shah", "erxleben", "doshi", "mohit", "nirav"]:
                     logger.info(f"Skipping excluded name: {ent_text}")
                     continue
                 list_names.append(ent.text)
