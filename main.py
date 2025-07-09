@@ -29,11 +29,7 @@ async def run_main_linkedin_search(path_CoverLetters):
     """
     return await asyncio.to_thread(main_linkedin_search, path_CoverLetters)
 
-async def main():
-    # Paths
-    path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
-    path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
-    path_LinkedInMessage = r"LinkedInMessage.txt"
+async def main(path_LOR, path_CoverLetters, path_LinkedInMessage):
     # Run all tasks concurrently
     results = await asyncio.gather(
         run_main_merger(path_CoverLetters, path_LOR),
@@ -43,10 +39,7 @@ async def main():
     main_copymessage(path_LinkedInMessage, name, company)
     main_chart(path_CoverLetters)
 
-def sync_main():
-    path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
-    path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
-    path_LinkedInMessage = r"LinkedInMessage.txt"
+def sync_main(path_LOR, path_CoverLetters, path_LinkedInMessage):
     main_merger(path_CoverLetters, path_LOR)
     (name, company) = main_linkedin_search(path_CoverLetters)
     
@@ -54,6 +47,10 @@ def sync_main():
     main_chart(path_CoverLetters)
 
 if __name__ == "__main__":
+    path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - ISRA 2025.pdf"
+    # path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
+    path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
+    path_LinkedInMessage = r"LinkedInMessage.txt"
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     print(f"Current working directory: {os.getcwd()}")
     start_time = datetime.datetime.now()
@@ -64,10 +61,10 @@ if __name__ == "__main__":
     if bool_async:
         logger.info("Running in asynchronous mode")
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-        asyncio.run(main())
+        asyncio.run(main(path_LOR, path_CoverLetters, path_LinkedInMessage))
     else:
         logger.info("Running in synchronous mode")
-        sync_main()
+        sync_main(path_LOR, path_CoverLetters, path_LinkedInMessage)
     logger.info("Ending the main script successfully ...")
 
     end_time = datetime.datetime.now()
