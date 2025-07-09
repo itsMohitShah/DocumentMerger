@@ -1,5 +1,6 @@
 print("Starting the main script...")
 import os
+import sys
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import datetime
 import asyncio
@@ -11,11 +12,11 @@ from Utils.ChartMaker import main_chart
 from Utils.LinkedInSearcher import main_linkedin_search
 from Utils.LinkedInMessager import main_copymessage
 
-async def run_main_merger(path_CoverLetters, path_LOR):
+async def run_main_merger(path_CoverLetters, path_LOR_ISRA, path_LOR_NIDO):
     """
     Wrapper to run the main_merger function asynchronously.
     """
-    await asyncio.to_thread(main_merger, path_CoverLetters, path_LOR)
+    await asyncio.to_thread(main_merger, path_CoverLetters, path_LOR_ISRA, path_LOR_NIDO)
 
 async def run_main_chart(path_CoverLetters):
     """
@@ -29,29 +30,31 @@ async def run_main_linkedin_search(path_CoverLetters):
     """
     return await asyncio.to_thread(main_linkedin_search, path_CoverLetters)
 
-async def main(path_LOR, path_CoverLetters, path_LinkedInMessage):
+async def main(path_LOR_ISRA,path_LOR_NIDO, path_CoverLetters, path_LinkedInMessage):
     # Run all tasks concurrently
     results = await asyncio.gather(
-        run_main_merger(path_CoverLetters, path_LOR),
+        run_main_merger(path_CoverLetters, path_LOR_ISRA,path_LOR_NIDO),
         run_main_linkedin_search(path_CoverLetters)
     )
     _, (name, company) = results
     main_copymessage(path_LinkedInMessage, name, company)
     main_chart(path_CoverLetters)
 
-def sync_main(path_LOR, path_CoverLetters, path_LinkedInMessage):
-    main_merger(path_CoverLetters, path_LOR)
+def sync_main(path_LOR_ISRA,path_LOR_NIDO, path_CoverLetters, path_LinkedInMessage):
+    main_merger(path_CoverLetters, path_LOR_ISRA,path_LOR_NIDO)
     (name, company) = main_linkedin_search(path_CoverLetters)
     
     main_copymessage(path_LinkedInMessage, name, company)
     main_chart(path_CoverLetters)
 
 if __name__ == "__main__":
-    path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - ISRA 2025.pdf"
-    # path_LOR = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
+    path_LOR_ISRA = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - ISRA 2025.pdf"
+    path_LOR_NIDO = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\LOR - NIDO 2020.pdf"
     path_CoverLetters = r"D:\OneDrive - Students RWTH Aachen University\User Data\Mohitto Laptop\Mohitto\Resume\Cover Letters\FromEuroPass"
     path_LinkedInMessage = r"LinkedInMessage.txt"
+    logger.info(f"Current working directory: {os.getcwd()}")
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    logger.info("Changing working directory to the script's directory")
     print(f"Current working directory: {os.getcwd()}")
     start_time = datetime.datetime.now()
     print(f"Starting at {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -61,10 +64,10 @@ if __name__ == "__main__":
     if bool_async:
         logger.info("Running in asynchronous mode")
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-        asyncio.run(main(path_LOR, path_CoverLetters, path_LinkedInMessage))
+        asyncio.run(main(path_LOR_ISRA,path_LOR_NIDO, path_CoverLetters, path_LinkedInMessage))
     else:
         logger.info("Running in synchronous mode")
-        sync_main(path_LOR, path_CoverLetters, path_LinkedInMessage)
+        sync_main(path_LOR_ISRA,path_LOR_NIDO, path_CoverLetters, path_LinkedInMessage)
     logger.info("Ending the main script successfully ...")
 
     end_time = datetime.datetime.now()

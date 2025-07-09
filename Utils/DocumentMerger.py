@@ -7,7 +7,7 @@ from Utils.Logging import logger  # Import the logger from your Logging module
 from colorama import Fore, Style
 
 # Merge PDFs
-def merge_pdfs(pdf1_path, pdf2_path, output_path):
+def merge_pdfs(pdf1_path, path_LOR_ISRA,path_LOR_NIDO, output_path):
     try:
         pdf_writer = PdfWriter()
 
@@ -17,10 +17,13 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
             pdf_writer.add_page(page)
 
         # Read and append the second PDF
-        pdf2_reader = PdfReader(pdf2_path)
+        pdf2_reader = PdfReader(path_LOR_ISRA)
         for page in pdf2_reader.pages:
             pdf_writer.add_page(page)
 
+        pdf3_reader = PdfReader(path_LOR_NIDO)
+        for page in pdf3_reader.pages:
+            pdf_writer.add_page(page)
         # Write the merged PDF to the output file
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
@@ -30,7 +33,7 @@ def merge_pdfs(pdf1_path, pdf2_path, output_path):
         raise
 
 
-def main_merger(path_CoverLetters, path_LOR):
+def main_merger(path_CoverLetters, path_LOR_ISRA,path_LOR_NIDO):
     try:
 
         most_recent_pdf = find_most_recent_pdf(path_CoverLetters)
@@ -45,6 +48,6 @@ def main_merger(path_CoverLetters, path_LOR):
         # Save the output file in one folder above the Cover Letters path
         parent_folder = os.path.dirname(path_CoverLetters)
         output_path = os.path.join(parent_folder, output_file_name)
-        merge_pdfs(most_recent_pdf, path_LOR, output_path)
+        merge_pdfs(most_recent_pdf, path_LOR_ISRA,path_LOR_NIDO, output_path)
     except Exception as e:
         logger.error(f"Error in main merger process: {e}")
