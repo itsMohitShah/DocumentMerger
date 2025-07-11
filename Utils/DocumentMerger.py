@@ -28,6 +28,8 @@ def merge_pdfs(pdf1_path, path_LOR_ISRA,path_LOR_NIDO, output_path):
         with open(output_path, 'wb') as output_file:
             pdf_writer.write(output_file)
         logger.info(f"PDFs merged successfully and saved to: {output_path}")
+        # open pdf
+        os.startfile(output_path)  # This will open the merged PDF file
     except Exception as e:
         logger.error(f"Error merging PDFs: {e}")
         raise
