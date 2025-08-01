@@ -1,3 +1,3 @@
 Hallo {NAME}, ich bin Mohit, MSc-Absolvent der RWTH Aachen mit vier Jahren Berufserfahrung und sofort verfügbar. Ich suche aktuell eine Stelle im Bereich Softwareentwicklung und habe mich bereits über das Karriereportal von {COMPANY} beworben. Ich freue mich auf Ihr Feedback!
 
-Hi {NAME}, I am Mohit, a MSc. graduate from RWTH Aachen, and having four years of work experience, am looking for roles in Software Development with immediate availability. I have already made an application on {COMPANY}'s portal. Please do checkout my profile, and let me know your thoughts!
+Hi {NAME}, I am Mohit, an MSc. graduate from RWTH Aachen, with four years of work experience and I am looking for roles in Software Development with immediate availability. I have already made an application on {COMPANY}'s portal. Please do checkout my profile, and let me know your thoughts!
