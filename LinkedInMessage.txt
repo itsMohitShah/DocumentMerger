@@ -1,3 +1,3 @@
-Hallo {NAME}, ich bin Mohit, MSc-Absolvent der RWTH Aachen mit vier Jahren Berufserfahrung und sofort verfügbar. Ich suche aktuell eine Stelle im Bereich Softwareentwicklung und habe mich bereits über das Karriereportal von {COMPANY} beworben. Ich freue mich auf Ihr Feedback!
+Hallo {NAME}, ich bin Mohit, MSc-Absolvent der RWTH Aachen mit 4 Jahren Berufserfahrung. Ich habe eine Stellenausschreibung für die Position als Softwareentwickler auf Ihrem Portal gesehen. Könnten wir uns vernetzen, um zu besprechen, wie ich am besten zu den Bedürfnissen von {COMPANY} passe?
 
-Hi {NAME}, I am Mohit, an MSc. graduate from RWTH Aachen, with four years of work experience and I am looking for roles in Software Development with immediate availability. I have already made an application on {COMPANY}'s portal. Please do checkout my profile, and let me know your thoughts!
+Hi {NAME}, I’m Mohit, an MSc. RWTH Aachen graduate with 4 yrs of experience.  I saw a job posting for Software Developer position on your portal. Could we connect to discuss how I might best align with {COMPANY}’s needs?
